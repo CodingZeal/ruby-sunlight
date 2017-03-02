@@ -17,12 +17,12 @@ module Sunlight
         instance_variable_set("@#{key}", value) if Legislator.instance_methods.map { |m| m.to_sym }.include? key.to_sym
       end
     end
-    
+
     # Convenience method for getting out the youtube_id from the youtube_url
     def youtube_id
       /http:\/\/(?:www\.)?youtube\.com\/(?:user\/)?(.*?)\/?$/.match(youtube_url)[1] unless youtube_url.nil?
     end
-    
+
     # Get the committees the Legislator sits on
     #
     # Returns:
@@ -77,7 +77,7 @@ module Sunlight
 
 
     #
-    # A helper method for all_for. Use that instead, unless you 
+    # A helper method for all_for. Use that instead, unless you
     # already have the district object, then use this.
     #
     # Usage:
@@ -117,12 +117,12 @@ module Sunlight
 
       legislators_from_url(url)
     end
-    
+
     #
     # When you only have a zipcode (and could not get address from the user), use this.
     # It specifically accounts for the case where more than one Representative's district
     # is in a zip code.
-    # 
+    #
     # If possible, ask for full address for proper geocoding via Legislator#all_for, which
     # gives you a nice hash.
     #
@@ -136,13 +136,13 @@ module Sunlight
     #
     def self.all_in_zipcode(zipcode)
 
-      url = construct_url("legislators.allForZip", {:zip => zipcode})
+      url = construct_url("legislators/locate?zip=#{zipcode}")
 
       legislators_from_url(url)
 
     end # def self.all_in_zipcode
-    
-    
+
+
     def self.legislators_from_url(url)
       if (result = get_json_data(url))
 
@@ -153,17 +153,17 @@ module Sunlight
 
         legislators
 
-      else  
+      else
         nil
       end # if response.class
     end
-    # 
-    # Fuzzy name searching. Returns possible matching Legislators 
+    #
+    # Fuzzy name searching. Returns possible matching Legislators
     # along with a confidence score. Confidence scores below 0.8
     # mean the Legislator should not be used.
     #
     # The API documentation explains it best:
-    # 
+    #
     # http://wiki.sunlightlabs.com/index.php/Legislators.search
     #
     # Returns:
@@ -176,36 +176,36 @@ module Sunlight
     #   legislators = Sunlight::Legislator.search_by_name("Johnny Kerry", 0.9)
     #
     def self.search_by_name(name, threshold='0.8')
-      
+
       url = construct_url("legislators.search", {:name => name, :threshold => threshold})
-      
+
       if (response = get_json_data(url))
-        
+
         legislators = []
         response["response"]["results"].each do |result|
           if result
             legislator = Legislator.new(result["result"]["legislator"])
             fuzzy_score = result["result"]["score"]
-            
+
             if threshold.to_f < fuzzy_score.to_f
               legislator.fuzzy_score = fuzzy_score.to_f
               legislators << legislator
             end
           end
         end
-        
+
         if legislators.empty?
           nil
         else
-          legislators 
+          legislators
         end
-        
+
       else
         nil
       end
-      
+
     end # def self.search_by_name
-    
+
   end # class Legislator
 
 end # module Sunlight

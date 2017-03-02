@@ -3,10 +3,10 @@ module Sunlight
   # Houses general methods to work with the Sunlight and Google Maps APIs
   class Base
 
-    API_URL = "http://services.sunlightlabs.com/api/"
+    API_URL = "http://congress.api.sunlightfoundation.com/"
     API_FORMAT = "json"
     @@api_key = ''
-    
+
     def self.api_key
      @@api_key
     end
@@ -17,11 +17,7 @@ module Sunlight
 
     # Constructs a Sunlight API-friendly URL
     def self.construct_url(api_method, params)
-      if api_key == nil or api_key == ''
-        raise "Failed to provide Sunlight API Key"
-      else
-        "#{API_URL}#{api_method}.#{API_FORMAT}?apikey=#{api_key}#{hash2get(params)}"
-      end
+      "#{API_URL}#{api_method}"
     end
 
     # Converts a hash to a GET string
@@ -35,7 +31,7 @@ module Sunlight
 
       get_string
 
-    end # def hash2get    
+    end # def hash2get
 
     # Use the Net::HTTP and JSON libraries to make the API call
     #

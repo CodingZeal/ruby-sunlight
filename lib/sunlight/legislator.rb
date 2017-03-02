@@ -147,8 +147,8 @@ module Sunlight
       if (result = get_json_data(url))
 
         legislators = []
-        result["response"]["legislators"].each do |legislator|
-          legislators << Legislator.new(legislator["legislator"])
+        result["results"].each do |legislator|
+          legislators << Legislator.new(legislator)
         end
 
         legislators

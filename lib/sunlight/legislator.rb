@@ -136,7 +136,7 @@ module Sunlight
     #
     def self.all_in_zipcode(zipcode)
 
-      url = construct_url("legislators/locate?zip=#{zipcode}")
+      url = construct_url("legislators/locate?zip=", zipcode)
 
       legislators_from_url(url)
 

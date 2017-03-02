@@ -17,7 +17,7 @@ module Sunlight
 
     # Constructs a Sunlight API-friendly URL
     def self.construct_url(api_method, params)
-      "#{API_URL}#{api_method}"
+      "#{API_URL}#{api_method}#{params}"
     end
 
     # Converts a hash to a GET string

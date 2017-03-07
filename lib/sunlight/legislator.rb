@@ -3,11 +3,11 @@ module Sunlight
   class Legislator < Base
 
 
-    attr_accessor :title, :firstname, :middlename, :lastname, :name_suffix, :nickname,
-                  :party, :state, :district, :in_office, :gender, :phone, :fax, :website, :webform,
-                  :email, :congress_office, :bioguide_id, :votesmart_id, :fec_id,
-                  :govtrack_id, :crp_id, :congresspedia_url, :twitter_id, :youtube_url, :facebook_id,
-                  :senate_class, :birthdate, :fuzzy_score
+    attr_accessor :title, :first_name, :middle_name, :last_name, :name_suffix, :nickname,
+                  :party, :state, :district, :in_office, :gender, :phone, :fax, :website,
+                  :oc_email, :congress_office, :bioguide_id, :votesmart_id, :fec_id,
+                  :govtrack_id, :crp_id, :twitter_id, :youtube_url, :facebook_id,
+                  :senate_class, :birthday
 
     # Takes in a hash where the keys are strings (the format passed in by the JSON parser)
     #
